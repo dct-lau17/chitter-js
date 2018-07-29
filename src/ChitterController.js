@@ -9,6 +9,8 @@
         var peeplist = JSON.parse(this.responseText);
         var chittercontroller = new ChitterController(peeplist)
         chittercontroller.displayHtml()
+        chittercontroller.displaySignUp()
+
       }
     };
 
@@ -16,11 +18,12 @@
     xhttp.send();
   };
 
-  getPeepList();
 
-  function ChitterController(peeplist, peeplistview) {
-    this.peepList = peeplist
+
+  function ChitterController(peeplist, peeplistview, signupview) {
+    this.peepList = peeplist;
     this.peepListView = peeplistview || new PeepListView(this.peepList);
+    this.signUpView = signupview || new SignUpView()
   }
 
   ChitterController.prototype.displayHtml = function(){
@@ -29,6 +32,21 @@
       .innerHTML = this.peepListView.toHtml()
   };
 
+  ChitterController.prototype.displaySignUp = function(){
+    document
+      .getElementById("sign-up")
+      .innerHTML = this.signUpView.displayButton()
+  };
+
+  // function setEventListeners(){
+  //   document.getElementById('sign-up')
+  //     .addEventListener('click', getSignUpForm());
+  // }
+
+
+
+  // setEventListeners()
+  getPeepList();
   exports.ChitterController = ChitterController;
   exports.getPeepList = getPeepList
 
