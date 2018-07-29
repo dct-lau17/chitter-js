@@ -5,9 +5,36 @@
   };
 
   PeepListView.prototype.toHtml = function() {
-    console.log(formatDate(this._peepList[0].created_at))
-    return ["<p>", this._peepList[0].body, " ", formatDate(this._peepList[0].created_at), this._peepList[0].user.handle, "</p>"].join("")
+    return peepListToHtml(this._peepList)
+
   };
+
+  function peepListToHtml(peeplist){
+    return [
+      "<div id = peeps>",
+        "<ul>",
+          peepToHtml(peeplist),
+        "</ul>",
+      "</div>"
+    ].join("")
+  }
+
+  function peepToHtml(peeplist){
+    var output = '';
+    for(var i = 0; i < peeplist.length; i++){
+      output += [
+        "<p>",
+        peeplist[i].body,
+        "</br> ",
+        formatDate(peeplist[i].created_at),
+        " by ",
+        peeplist[i].user.handle,
+        "</p>"
+      ].join("");
+    }
+    return output
+  };
+
 
   function formatDate(jsonDate){
     var date = new Date(jsonDate);
